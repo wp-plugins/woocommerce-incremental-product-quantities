@@ -24,7 +24,7 @@ add_action( 'wp_enqueue_scripts', 'wpbo_input_value_validation' );
 function wpbo_input_value_validation() {
 	wp_enqueue_script( 
 		'wpbo_validation', 
-		plugins_url() . '/woocommerce-quantity-rules/wpbo_input_value_validation.js',
+		plugins_url() . '/woocommerce-incremental-product-quantities/wpbo_input_value_validation.js',
 		array( 'jquery' )
 	);
 }
