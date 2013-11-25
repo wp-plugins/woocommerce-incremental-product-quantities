@@ -1,10 +1,10 @@
 === WooCommerce Incremental Product Quantities  ===
-Contributors: jtwiest, wpbackoffice
+Contributors: wpbackoffice, jtwiest
 Tags: woocommerce, product quantities, input values
 Donate Link: http://wpbackoffice.com/plugins/woocommerce-incremental-product-quantities/
 Requires at least: 2.3
 Tested up to: 3.71
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,15 +12,17 @@ Sell products in increments by setting minimum and maximum quantities as well as
 
 == Description ==
 
-Sell WooCommerce products in increments by setting minimum and maximum quantities as well as the intervals in between.
+Sell WooCommerce products in increments by setting minimum and maximum quantities as well as the intervals in between ie. sell products by the dozen.
 
-Through the application of rules based on product categories or per product settings, you can easily sell products by the dozen and set minimum/maximum quantity amounts.
+Using rules based on product categories or per product settings, you can easily sell products by the dozen and set minimum/maximum quantity amounts.
 
-Features
+Features:
+
 * Simple installation makes getting started easy
 * Create product category based rules in seconds
+* Add your rule based input boxes to products thumbnails using [WooCommerce Thumbnail Input Quantities](http://wordpress.org/plugins/woocommerce-thumbnail-input-quantities/installation/)
 * Easily override rules on a per-product basis
-* Integrates with Woo’s CSV Import Suite
+* Integrates with [WooCommerce's Product CSV Import Suite](http://www.woothemes.com/products/product-csv-import-suite/?utm_source=docs&utm_medium=docssite&utm_campaign=docs)
 * See which rule is being applied to an individual product on your edit product page
 
 [Plugin's Official Documentation and Support Page](http://www.wpbackoffice.com/plugins/woocommerce-incremental-product-quantities)
@@ -28,6 +30,7 @@ Features
 == Installation ==
 
 Automatic WordPress Installation
+
 1. Log-in to your WordPress Site
 2. Under the plugin sidebar tab, click ‘Add New’
 3. Search for ‘WooCommerce Incremental Product Quantities
@@ -35,6 +38,7 @@ Automatic WordPress Installation
 5. Set Rules for categories by clicking the new ‘Quantity Rules’ sidebar option or assign per-product rules by using the new metabox on your product page.
 
 Manual Installation
+
 1. Download the latest version of the plugin from WooCommerce Incremental 2. Product Quantities wordpress page.
 3. Uncompress the file
 4. Upload the uncompressed directory to ‘/wp-content/plugins/’ via FTP
@@ -42,6 +46,9 @@ Manual Installation
 6. Set Rules for categories by clicking the new ‘Quantity Rules’ sidebar option or assign per-product rules by using the new metabox on your product page.
 
 == Changelog ==
+
+= 1.0.3 =
+* Readme.txt updates.
 
 = 1.0.2 =
 * Another small url change.
