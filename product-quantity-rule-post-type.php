@@ -241,7 +241,7 @@ function wpbo_input_thumbnail_notice() {
 	
 		add_meta_box(	
 			'wpbo-input-thumbnail-notice', 
-			'Notice', 
+			'Urgent Notice', 
 			'wpbo_input_thumbnail_notice_meta', 
 			'quantity-rule', 
 			'side', 
@@ -252,7 +252,7 @@ function wpbo_input_thumbnail_notice() {
 
 function wpbo_input_thumbnail_notice_meta( $post ) {
 	
-	echo "We've noticed you do not have <a href=''>WooCommerce Thumbnail Input Quantity</a> installed. <br /><br />It is <strong>highly recommended</strong> so your users can use your quantity rules from product thumbnails.";
+	echo "We've noticed you do not have <a href='http://wordpress.org/plugins/woocommerce-thumbnail-input-quantities/' target='_blank'>WooCommerce Thumbnail Input Quantity</a> installed. <br /><br />It is <strong>highly recommended</strong> so your users can use your quantity rules from product thumbnails.";
 	
 }
 

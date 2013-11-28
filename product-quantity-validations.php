@@ -1,33 +1,60 @@
 <?php
 /*
-*	Add to Cart Validation to ensure quantity ordered follows
-*	the user's rules.
+*	Add to Cart Validation to ensure quantity ordered follows the user's rules.
+*
+*	@access public 
+*	@param  boolean passed
+*	@param  int		product_id
+*	@param  int 	quantity
+*	@param  boolean from_cart
+*	@param  int 	variation_id
+*	@param  array	variations
+*	@param	string 	cart_item_key
+*	@return boolean
+*
 */
-add_action( 'woocommerce_add_to_cart_validation', 'wpbo_add_to_cart_validation', 5, 4 );
+add_action( 'woocommerce_add_to_cart_validation', 'wpbo_add_to_cart_validation', 5, 6 );
 
-function wpbo_add_to_cart_validation( $passed, $product_id, $quantity, $variation_id, $variations ) {
+function wpbo_add_to_cart_validation( $passed, $product_id, $quantity, $variation_id = null, $variations = null, $cart_item_key = null ) {
 
-	return wpbo_validate_single_product( $passed, $product_id, $quantity, $variation_id, $variations, false );
+	return wpbo_validate_single_product( $passed, $product_id, $quantity, false, $variation_id, $variations );
 	
 }
 
 /*
-*	Cart Update Validation to ensure quantity ordered follows
-*	the user's rules. Items are being passed thro
+*	Cart Update Validation to ensure quantity ordered follows the user's rules.
+*
+*	@access public 
+*	@param  boolean passed
+*	@param  string	cart_item_key
+*	@param  array 	values
+*	@param  int 	quantity
+*	@return boolean
+*
 */
-add_action( 'woocommerce_update_cart_validation', 'wpbo_update_cart_validation', 5, 4 );
+add_action( 'woocommerce_update_cart_validation', 'wpbo_update_cart_validation', 4, 5 );
 
 function wpbo_update_cart_validation( $passed, $cart_item_key, $values, $quantity ) {
 
-	return wpbo_validate_single_product( $passed, $values['product_id'], $quantity, $values['variation_id'], $values['variations'], true );
+	return wpbo_validate_single_product( $passed, $values['product_id'], $quantity, true, $values['variation_id'], $values['variations'] );
 	
 }
 
 /*
 *	Validates a single product based on the quantity rules applied to it.
 *	It will also validate based on the quantity in the cart.
+*
+*	@access public 
+*	@param  boolean passed
+*	@param  int		product_id
+*	@param  int 	quantity
+*	@param  boolean from_cart
+*	@param  int 	variation_id
+*	@param  array	variations
+*	@return boolean
+*	
 */
-function wpbo_validate_single_product( $passed, $product_id, $quantity, $variation_id, $variations, $from_cart ) {
+function wpbo_validate_single_product( $passed, $product_id, $quantity, $from_cart, $variation_id = null, $variations = null ) {
 	global $woocommerce, $product;
 	$product = get_product( $product_id );
 	$title = $product->get_title();

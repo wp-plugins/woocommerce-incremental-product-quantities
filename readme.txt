@@ -4,7 +4,7 @@ Tags: woocommerce, product quantities, input values
 Donate Link: http://wpbackoffice.com/plugins/woocommerce-incremental-product-quantities/
 Requires at least: 2.3
 Tested up to: 3.71
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,13 +39,17 @@ Automatic WordPress Installation
 
 Manual Installation
 
-1. Download the latest version of the plugin from WooCommerce Incremental 2. Product Quantities wordpress page.
+1. Download the latest version of the plugin from WooCommerce Incremental 
+2. Product Quantities wordpress page.
 3. Uncompress the file
 4. Upload the uncompressed directory to ‘/wp-content/plugins/’ via FTP
 5. Active the plugin from your wordpress backend ‘Plugins -> Installed Plugins’
 6. Set Rules for categories by clicking the new ‘Quantity Rules’ sidebar option or assign per-product rules by using the new metabox on your product page.
 
 == Changelog ==
+
+= 1.0.4 =
+* Style sheet and link update. Added potential soluation for niche valdation problem. 
 
 = 1.0.3 =
 * Readme.txt updates.
