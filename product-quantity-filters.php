@@ -2,7 +2,7 @@
 /*
 *	Filter Minimum Quantity Value for Input Boxes
 */								
-add_filter( 'woocommerce_quantity_input_min', 'wpbo_input_min_value', 1, 2);
+//add_filter( 'woocommerce_quantity_input_min', 'wpbo_input_min_value', 1, 2);
 
 function wpbo_input_min_value( $default, $product ) {
 	
@@ -28,7 +28,7 @@ function wpbo_input_min_value( $default, $product ) {
 /*
 *	Filter Maximum Quantity Value for Input Boxes
 */
-add_filter( 'woocommerce_quantity_input_max', 'wpbo_input_max_value', 1, 2);
+//add_filter( 'woocommerce_quantity_input_max', 'wpbo_input_max_value', 1, 2);
 
 function wpbo_input_max_value( $default, $product ) {	
 	
@@ -54,7 +54,7 @@ function wpbo_input_max_value( $default, $product ) {
 /*
 *	Filter Step Quantity Value for Input Boxes woocommerce_quantity_input_step
 */
-add_filter( 'woocommerce_quantity_input_step', 'wpbo_input_step_value', 1, 2);
+//add_filter( 'woocommerce_quantity_input_step', 'wpbo_input_step_value', 1, 2);
 
 function wpbo_input_step_value( $default, $product ) {
 	
@@ -77,9 +77,14 @@ function wpbo_input_step_value( $default, $product ) {
 	}
 }	
 
-//add_filter( 'woocommerce_quantity_input_args', 'wpbo_input_set_all_values', 1, 2 );
+add_filter( 'woocommerce_quantity_input_args', 'wpbo_input_set_all_values', 1, 2 );
 
 function wpbo_input_set_all_values( $args, $product ) {
+	
+	// Return Defaults if it isn't a simple product
+	if( $product->product_type != 'simple' ) {
+		return $args;
+	}
 	
 	// Get Rule
 	$rule = wpbo_get_applied_rule( $product );
@@ -93,12 +98,14 @@ function wpbo_input_set_all_values( $args, $product ) {
 	
 	$vals = array();
 	
-	// $vals['input_name'] = $args['input_name'];
 	$vals['input_name'] = 'quantity';
-	
+
 	if ( $values['min_value'] != '' ) {
 		$vals['input_value'] = $values['min_value'];
 		$vals['min_value'] 	 = $values['min_value'];
+	} elseif ( $values['min_value'] == '' and $values['step'] != '' ) {
+		$vals['input_value'] = $values['step'];
+		$vals['min_value'] 	 = $values['step'];
 	} else {
 		$vals['input_value'] = $args['input_value'];
 		$vals['min_value'] 	 = $args['min_value'];

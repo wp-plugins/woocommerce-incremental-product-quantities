@@ -220,7 +220,7 @@ function wpbo_print_tax_inputs( $term, $taxonomy_name, $cats, $level ) {
 		foreach ( $children as $child_id ){
 			$child = get_term_by( 'id', $child_id, $taxonomy_name );
 			// If the child is at the second level relative to the last printed element, exclude it
-			if ( $child->parent == $term->term_id ) {
+			if ( is_object( $child ) and $child->parent == $term->term_id ) {
 				wpbo_print_tax_inputs( $child, $taxonomy_name, $cats, $level );
 			}
 		}
@@ -237,11 +237,11 @@ function wpbo_input_thumbnail_notice() {
 
 	// Only show eta box if user has not installed thumbnail plugin
 	
-	if ( !in_array( 'woocommerce-thumbnail-input-quantity/woocommerce-thumbnail-input-quantity.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	if ( !in_array( 'woocommerce-thumbnail-input-quantities/woocommerce-thumbnail-input-quantity.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	
 		add_meta_box(	
 			'wpbo-input-thumbnail-notice', 
-			'Urgent Notice', 
+			'Notice', 
 			'wpbo_input_thumbnail_notice_meta', 
 			'quantity-rule', 
 			'side', 

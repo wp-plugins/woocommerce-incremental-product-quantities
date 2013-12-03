@@ -67,7 +67,9 @@ function wpbo_validate_single_product( $passed, $product_id, $quantity, $from_ca
 	// Get the applied rule and values - if they exist
 	$rule = wpbo_get_applied_rule( $product );
 	$values = wpbo_get_value_from_rule( 'all', $product, $rule );
-	extract( $values ); // $min_value, $max_value, $step, $priority
+	
+	if ( $values != null )
+		extract( $values ); // $min_value, $max_value, $step, $priority
 			
 	// Inactive Products can be ignored
 	if ( $values == null )
