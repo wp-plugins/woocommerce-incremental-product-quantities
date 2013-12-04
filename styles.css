@@ -98,3 +98,9 @@ ul.level-4 {
 	border-bottom: 1px solid #dfdfdf;
 	padding: 5px 10px 10px;
 }
+
+/* --------- wpbo company notice ---------- */
+#wpbo-company-notice .inside {
+	text-align: center;
+}
+

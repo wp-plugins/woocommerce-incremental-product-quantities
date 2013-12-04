@@ -153,8 +153,9 @@ function wpbo_quantity_rule_meta( $post ) {
 			<input type="number" name="step" id="step" value="<?php echo $step ?>" />
 			
 			<label for="step">Priority</label>
-			<input type="number" name="priority" id="priority" value="<?php echo $priority ?>" />
+			<input type="number" name="priority" id="priority" value="<?php echo $priority ?>" />			
 		</div>
+		<p><em>*Note - the minimum value must be greater then or equal to the step value.</em></p>
 	<?php	
 }
 
@@ -257,16 +258,53 @@ function wpbo_input_thumbnail_notice_meta( $post ) {
 }
 
 /*
+*	Register and Create Meta Box to encourage user to install our thumbnail plugin
+*/
+add_action( 'add_meta_boxes', 'wpbo_company_notice' );
+
+function wpbo_company_notice() {
+
+	add_meta_box(	
+		'wpbo-company-notice', 
+		'Message from WP BackOffice', 
+		'wpbo_company_notice_meta', 
+		'quantity-rule', 
+		'side', 
+		'low'
+	);
+}
+
+function wpbo_company_notice_meta( $post ) {
+	
+	?>
+		<a href="http://www.wpbackoffice.com" target="_blank"><img src="<?php echo plugins_url() ?>/woocommerce-incremental-product-quantities/wpbo-logo.png" /></a>
+		<p>
+			<a href="http://www.wpbackoffice.com" target="_blank">WooCommerce Hosting, Customization, Support</a>
+		</p>
+	<?php 
+	
+}
+
+/*
 *	Hook to save all meta data
 */
 add_action( 'save_post', 'wpbo_save_quantity_rule_meta');
 
 function wpbo_save_quantity_rule_meta( $post_id ) {
-
-	update_post_meta( $post_id, '_min', wpbo_validate_number( $_POST['min']) );
-	update_post_meta( $post_id, '_max', wpbo_validate_number( $_POST['max']) );
-	update_post_meta( $post_id, '_step', wpbo_validate_number( $_POST['step']) );
-	update_post_meta( $post_id, '_priority', wpbo_validate_number( $_POST['priority']) );
+	
+	/* Make sure $min >= step */
+	$min = $_POST['min'];
+	
+	if ( isset( $_POST['step'] ) and isset( $min ) ) {
+		if ( $min < $_POST['step']) {
+			$min = $_POST['step'];
+		}
+	}
+	
+	update_post_meta( $post_id, '_min', wpbo_validate_number( $min ) );
+	update_post_meta( $post_id, '_max', wpbo_validate_number( $_POST['max'] ) );
+	update_post_meta( $post_id, '_step', wpbo_validate_number( $_POST['step'] ) );
+	update_post_meta( $post_id, '_priority', wpbo_validate_number( $_POST['priority'] ) );
 
 	// Check which Categories have been selected
 	$tax_name = 'product_cat';

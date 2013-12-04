@@ -114,6 +114,7 @@ function wpbo_product_info( $post ) {
 			<label for="_wpbo_maximum">Maximum Quantity</label>
 			<input type="number" name="_wpbo_maximum" value="<?php echo $max; ?>" />
 		</div>
+		<p><em>*Note - the minimum value must be greater then or equal to the step value.</em></p>
 		<?php
 	endif; // Product Type Must Equal Simple
 }
@@ -137,6 +138,16 @@ function wpbo_save_quantity_meta( $post_id ) {
 		);
 	}
 	
+	$min  = $_POST['_wpbo_minimum'];
+	$step = $_POST['_wpbo_step'];
+	
+	/* Make sure min >= step */
+	if ( isset( $step ) and isset( $min ) ) {
+		if ( $min < $step ) {
+			$min = $step;
+		}
+	}
+	
 	if( isset( $_POST['_wpbo_step'] )) {
 		update_post_meta( 
 			$post_id, 
@@ -149,7 +160,7 @@ function wpbo_save_quantity_meta( $post_id ) {
 		update_post_meta( 
 			$post_id, 
 			'_wpbo_minimum', 
-			strip_tags( $_POST['_wpbo_minimum'] )
+			strip_tags( $min )
 		);
 	}
 	
@@ -175,4 +186,15 @@ function wpbo_save_quantity_meta( $post_id ) {
 		);
 	}
 }
+
+/*
+*	Validate Minimum and Step Values to ensure min >= step
+*
+*	@access public 
+*	@param  int 	min
+*	@param  int		step
+*	@return int, int		step
+*
+*/
+
 ?>

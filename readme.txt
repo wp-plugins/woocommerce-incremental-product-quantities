@@ -4,7 +4,7 @@ Tags: woocommerce, product quantities, input values
 Donate Link: http://wpbackoffice.com/plugins/woocommerce-incremental-product-quantities/
 Requires at least: 2.3
 Tested up to: 3.71
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,9 @@ Manual Installation
 6. Set Rules for categories by clicking the new ‘Quantity Rules’ sidebar option or assign per-product rules by using the new metabox on your product page.
 
 == Changelog ==
+
+= 1.0.6 =
+* Fixed cart bug, added additional validation so users can't enter minimum values that are less then the step value.
 
 = 1.0.5 =
 * Fixed additional bug related to missing input values and error messages on some installs. Also updated notice window. 

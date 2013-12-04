@@ -1,8 +1,14 @@
 <?php 
 /*
-*	Filter Minimum Quantity Value for Input Boxes
-*/								
-//add_filter( 'woocommerce_quantity_input_min', 'wpbo_input_min_value', 1, 2);
+*	Filter Minimum Quantity Value for Input Boxes for Cart
+*
+*	@access public 
+*	@param  int 	default
+*	@param  obj		product
+*	@return int		step
+*
+*/							
+add_filter( 'woocommerce_quantity_input_min', 'wpbo_input_min_value', 1, 2);
 
 function wpbo_input_min_value( $default, $product ) {
 	
@@ -26,9 +32,15 @@ function wpbo_input_min_value( $default, $product ) {
 }
 
 /*
-*	Filter Maximum Quantity Value for Input Boxes
+*	Filter Maximum Quantity Value for Input Boxes for Cart
+*
+*	@access public 
+*	@param  int 	default
+*	@param  obj		product
+*	@return int		step
+*
 */
-//add_filter( 'woocommerce_quantity_input_max', 'wpbo_input_max_value', 1, 2);
+add_filter( 'woocommerce_quantity_input_max', 'wpbo_input_max_value', 1, 2);
 
 function wpbo_input_max_value( $default, $product ) {	
 	
@@ -52,9 +64,15 @@ function wpbo_input_max_value( $default, $product ) {
 }
 
 /*
-*	Filter Step Quantity Value for Input Boxes woocommerce_quantity_input_step
+*	Filter Step Quantity Value for Input Boxes woocommerce_quantity_input_step for Cart
+*
+*	@access public 
+*	@param  int 	default
+*	@param  obj		product
+*	@return int		step
+*
 */
-//add_filter( 'woocommerce_quantity_input_step', 'wpbo_input_step_value', 1, 2);
+add_filter( 'woocommerce_quantity_input_step', 'wpbo_input_step_value', 1, 2);
 
 function wpbo_input_step_value( $default, $product ) {
 	
@@ -77,6 +95,15 @@ function wpbo_input_step_value( $default, $product ) {
 	}
 }	
 
+/*
+*	Filter Step, Min and Max for Quantity Input Boxes on product pages
+*
+*	@access public 
+*	@param  array 	args
+*	@param  obj		product
+*	@return array	vals
+*
+*/
 add_filter( 'woocommerce_quantity_input_args', 'wpbo_input_set_all_values', 1, 2 );
 
 function wpbo_input_set_all_values( $args, $product ) {
