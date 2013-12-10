@@ -3,8 +3,8 @@
 Plugin Name: WooCommerce Incremental Product Quantities
 Plugin URI: http://www.wpbackoffice.com/plugins/woocommerce-incremental-product-quantities/
 Description: Sell products in increments by setting minimum and maximum quantities as well as the intervals in between. Highly recommended to also install 'WooCommerce Thumbnail Input Quantities' to allow users to add your custom quantites from product thumbnails.
-Version: 1.0.6
-Author: J. Tyler Wiest
+Version: 1.0.7
+Author: WP BackOffice
 Author URI: http://www.wpbackoffice.com
 */ 
 
