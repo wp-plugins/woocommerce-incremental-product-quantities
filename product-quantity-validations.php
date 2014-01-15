@@ -134,9 +134,9 @@ function wpbo_validate_single_product( $passed, $product_id, $quantity, $from_ca
 			}
 			
 			// Total Cart Quantity Step Validation
-			if ( $step != null && $cart_qty_rem % step != 0 ) {
-				$woocommerce->add_error( sprintf( __("You may only purchase %s in multiples of %s.", 'woocommerce' ), $title, $step  ) );
-				return false;
+			if ( $step != null && $step != 0 && $cart_qty_rem != 0 && $cart_qty_rem % $step != 0 ) {
+				$woocommerce->add_error( sprintf( __("You may only purchase %s in multiples of %s.", 'woocommerce' ), $title, $step ) );
+			return false;
 			}
 		}
 	}
