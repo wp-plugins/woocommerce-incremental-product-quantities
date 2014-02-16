@@ -138,8 +138,13 @@ function wpbo_save_quantity_meta( $post_id ) {
 		);
 	}
 	
-	$min  = $_POST['_wpbo_minimum'];
-	$step = $_POST['_wpbo_step'];
+	if ( isset( $_POST['_wpbo_minimum'] )) {
+		$min  = $_POST['_wpbo_minimum'];
+	}
+	
+	if ( isset( $_POST['_wpbo_step'] )) {
+		$step = $_POST['_wpbo_step'];
+	}
 	
 	/* Make sure min >= step */
 	if ( isset( $step ) and isset( $min ) ) {
@@ -186,15 +191,3 @@ function wpbo_save_quantity_meta( $post_id ) {
 		);
 	}
 }
-
-/*
-*	Validate Minimum and Step Values to ensure min >= step
-*
-*	@access public 
-*	@param  int 	min
-*	@param  int		step
-*	@return int, int		step
-*
-*/
-
-?>

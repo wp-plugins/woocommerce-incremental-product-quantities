@@ -36,7 +36,7 @@ add_action( 'woocommerce_update_cart_validation', 'wpbo_update_cart_validation',
 
 function wpbo_update_cart_validation( $passed, $cart_item_key, $values, $quantity ) {
 
-	return wpbo_validate_single_product( $passed, $values['product_id'], $quantity, true, $values['variation_id'], $values['variations'] );
+	return wpbo_validate_single_product( $passed, $values['product_id'], $quantity, true, $values['variation_id'], $values['variation'] );
 	
 }
 
@@ -76,14 +76,15 @@ function wpbo_validate_single_product( $passed, $product_id, $quantity, $from_ca
 		return true;
 
 	// Min Validation
-	if ( $min_value != null && $quantity < $min_value ) {
-		$woocommerce->add_error( sprintf( __( "You must add a minimum of %s %s's to your cart.", 'woocommerce' ), $min_value, $title ) );
+	if ( $min_value != null && $quantity < intval( $min_value ) ) {
+		wc_add_notice( sprintf( __( "You must add a minimum of %s %s's to your cart.", 'woocommerce' ), $min_value, $title ), 'error' );
 		return false;
 	}
-	
+
+
 	// Max Validation
-	if ( $max_value != null && $quantity > $max_value ) {
-		$woocommerce->add_error( sprintf( __( "You may only add a maximum of %s %s's to your cart.", 'woocommerce' ), $max_value, $title ) );
+	if ( $max_value != null && $quantity > intval( $max_value ) ) {
+		wc_add_notice( sprintf( __( "You may only add a maximum of %s %s's to your cart.", 'woocommerce' ), $max_value, $title ), 'error' );
 		return false;
 	}
 	
@@ -96,7 +97,7 @@ function wpbo_validate_single_product( $passed, $product_id, $quantity, $from_ca
 	
 	// Step Validation	
 	if ( $step != null && $rem_qty % $step != 0 ) {
-		$woocommerce->add_error( sprintf( __( "You may only add a %s in multiples of %s to your cart.", 'woocommerce' ), $title, $step ) );
+		wc_add_notice( sprintf( __( "You may only add a %s in multiples of %s to your cart.", 'woocommerce' ), $title, $step ), 'error' );
 		return false;
 	}
 	
@@ -112,17 +113,17 @@ function wpbo_validate_single_product( $passed, $product_id, $quantity, $from_ca
 		}
 		
 		//  If there aren't any items in the cart already, ignore these validations
-		if ( $cart_qty != null ) {
+		if ( isset( $cart_qty ) and $cart_qty != null ) {
 		
 			// Total Cart Quantity Min Validation
 			if ( $min_value != null && ( $quantity + $cart_qty ) < $min_value ) {
-				$woocommerce->add_error( sprintf( __( "Your cart must have a minimum of %s %s's to proceed.", 'woocommerce' ), $min_value, $title ) );
+				wc_add_notice( sprintf( __( "Your cart must have a minimum of %s %s's to proceed.", 'woocommerce' ), $min_value, $title ), 'error' );
 				return false;
 			}
 		
 			// Total Cart Quantity Max Validation
 			if ( $max_value != null && ( $quantity + $cart_qty ) > $max_value ) {
-				$woocommerce->add_error( sprintf( __( "You can only purchase a maximum of %s %s's at once and your cart already has %s %s's in it already.", 'woocommerce' ), $max_value, $title, $cart_qty, $title ) );
+				wc_add_notice( sprintf( __( "You can only purchase a maximum of %s %s's at once and your cart already has %s %s's in it already.", 'woocommerce' ), $max_value, $title, $cart_qty, $title ), 'error' );
 				return false;
 			}
 			
@@ -135,7 +136,7 @@ function wpbo_validate_single_product( $passed, $product_id, $quantity, $from_ca
 			
 			// Total Cart Quantity Step Validation
 			if ( $step != null && $step != 0 && $cart_qty_rem != 0 && $cart_qty_rem % $step != 0 ) {
-				$woocommerce->add_error( sprintf( __("You may only purchase %s in multiples of %s.", 'woocommerce' ), $title, $step ) );
+				wc_add_notice( sprintf( __("You may only purchase %s in multiples of %s.", 'woocommerce' ), $title, $step ), 'error' );
 			return false;
 			}
 		}

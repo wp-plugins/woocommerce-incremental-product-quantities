@@ -155,7 +155,8 @@ function wpbo_quantity_rule_meta( $post ) {
 			<label for="step">Priority</label>
 			<input type="number" name="priority" id="priority" value="<?php echo $priority ?>" />			
 		</div>
-		<p><em>*Note - the minimum value must be greater then or equal to the step value.</em></p>
+		<p><em>*Note - the minimum value must be greater then or equal to the step value.</em><br />
+		<em>*Note - The rule with the lowest priority number will be used if multiple rules are applied to a single product.</em></p>
 	<?php	
 }
 
@@ -207,7 +208,7 @@ function wpbo_print_tax_inputs( $term, $taxonomy_name, $cats, $level ) {
 	// Echo Single Item
 	?>
 		<li>
-			<input type="checkbox" id="<?php echo $term->term_id ?>" name="<?php echo $term->term_id ?>" <?php if ( in_array( $term->term_id, $cats )) echo 'checked' ?> /><?php echo $term->name; ?>
+			<input type="checkbox" id="_wpbo_cat_<?php echo $term->term_id ?>" name="_wpbo_cat_<?php echo $term->term_id ?>" <?php if ( in_array( $term->term_id, $cats )) echo 'checked="checked"' ?> /><?php echo $term->name; ?>
 		</li>
 	<?php 
 	
@@ -293,7 +294,9 @@ add_action( 'save_post', 'wpbo_save_quantity_rule_meta');
 function wpbo_save_quantity_rule_meta( $post_id ) {
 	
 	/* Make sure $min >= step */
-	$min = $_POST['min'];
+	if( isset( $_POST['min'] ) ) {
+		$min = $_POST['min'];
+	}
 	
 	if ( isset( $_POST['step'] ) and isset( $min ) ) {
 		if ( $min < $_POST['step']) {
@@ -301,11 +304,22 @@ function wpbo_save_quantity_rule_meta( $post_id ) {
 		}
 	}
 	
-	update_post_meta( $post_id, '_min', wpbo_validate_number( $min ) );
-	update_post_meta( $post_id, '_max', wpbo_validate_number( $_POST['max'] ) );
-	update_post_meta( $post_id, '_step', wpbo_validate_number( $_POST['step'] ) );
-	update_post_meta( $post_id, '_priority', wpbo_validate_number( $_POST['priority'] ) );
-
+	if ( isset( $min ) ) {
+		update_post_meta( $post_id, '_min', wpbo_validate_number( $min ) );
+	}
+	
+	if ( isset( $min ) ) {
+		update_post_meta( $post_id, '_max', wpbo_validate_number( $_POST['max'] ) );
+	}
+	
+	if ( isset( $min ) ) {
+		update_post_meta( $post_id, '_step', wpbo_validate_number( $_POST['step'] ) );
+	}
+	
+	if ( isset( $min ) ) {
+		update_post_meta( $post_id, '_priority', wpbo_validate_number( $_POST['priority'] ) );
+	}
+	
 	// Check which Categories have been selected
 	$tax_name = 'product_cat';
 	$args = array( 'hide_empty' => false );
@@ -314,7 +328,8 @@ function wpbo_save_quantity_rule_meta( $post_id ) {
 
 	// See which terms were included
 	foreach ( $terms as $term ) {
-		if ( $_POST[ $term->term_id ] == 'on' ) {
+		$term_name = '_wpbo_cat_' . $term->term_id;
+		if ( isset( $_POST[ $term_name ] ) and $_POST[ $term_name ] == 'on' ) {
 			array_push( $cats, $term->term_id );		
 		} 
 	}

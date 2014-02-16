@@ -3,6 +3,9 @@
 *	Given the product, this will check which rule is being applied to a product
 * 	If there is a rule, the values will be returned otherwise it is inactive 
 *	or overridden (from the product meta box).
+*
+*	@params object	$product WC_Product object
+*	@return mixed 	String of rule status / Object top rule post 
 */
 function wpbo_get_applied_rule( $product ) {
 	
@@ -18,6 +21,9 @@ function wpbo_get_applied_rule( $product ) {
 /*
 *	Get the Rule Object thats being applied to a given product.
 *	Will return null if no rule is applied.
+*
+*	@params object	$product WC_Product object
+*	@return mixed 	Null if no rule applies / Object top rule post 
 */
 function wpbo_get_applied_rule_obj( $product ) {
 	
@@ -27,7 +33,7 @@ function wpbo_get_applied_rule_obj( $product ) {
 	
 	// Get all Rules
 	$args = array(
-		'posts_per_page'   => 1000,
+		'posts_per_page'   => -1,
 		'offset'           => 0,
 		'post_type'        => 'quantity-rule',
 		'post_status'      => 'publish',
@@ -54,12 +60,12 @@ function wpbo_get_applied_rule_obj( $product ) {
 		 	}
 	 	}
 	 	
-	 	// If the rule applies, check the priority=
+	 	// If the rule applies, check the priority
 	 	if ( $apply_rule == true ) {
 	 	
 	 		$priority = get_post_meta( $rule->ID, '_priority', true );	
-	 		
-	 		if( $top > $priority or $top == null ) {
+
+	 		if( $priority != '' and $top > $priority or $top == null ) {
 	 			$top = $priority;
 	 			$top_rule = $rule;
 		 	}
@@ -71,6 +77,11 @@ function wpbo_get_applied_rule_obj( $product ) {
 
 /*
 *	Get the Input Value (min/max/step/priority/all) for a product given a rule
+*
+*	@params string	$type Product type
+*	@params object 	$produt Product Object 
+*	@params object	$rule Rule post object
+*	@return void 	 
 */
 function wpbo_get_value_from_rule( $type, $product, $rule ) {
 	

@@ -9,10 +9,10 @@ jQuery(document).ready( function($) {
 		var min = $(this).attr( 'min' );
 		
 		// Adjust default values if values are blank
-		if ( min == '' ) 
+		if ( min == '' || typeof min == 'undefined' ) 
 			min = 1;
 		
-		if ( step == '' ) 
+		if ( step == '' || typeof step == 'undefined') 
 			step = 1;
 		
 		// Calculate remainder
@@ -30,10 +30,9 @@ jQuery(document).ready( function($) {
 		} else if ( rem != 0 ) {
 			new_qty = +new_qty + (+step - +rem);
 		}
-		
-		// Set the new values
+
+		// Set the new value
 		$(this).val( new_qty );
-		$(this).attr( "data-quantity", new_qty );
 	});
 	
 });
