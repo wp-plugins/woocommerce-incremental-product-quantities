@@ -182,9 +182,14 @@ function wpbo_quantity_rule_tax_init() {
 
 function wpbo_quantity_rule_tax_meta( $post ) {
 
+	// Get selected categories
 	$cats = get_post_meta( $post->ID, '_cats', false);
-	$cats = $cats[0];
-		
+
+	if ( $cats != null ) {
+		$cats = $cats[0];
+	}
+	
+	// Get all possible categories
 	$tax_name = 'product_cat';
 	
 	$args = array( 
@@ -215,7 +220,7 @@ function wpbo_print_tax_inputs( $term, $taxonomy_name, $cats, $level ) {
 	// Echo Single Item
 	?>
 		<li>
-			<input type="checkbox" id="_wpbo_cat_<?php echo $term->term_id ?>" name="_wpbo_cat_<?php echo $term->term_id ?>" <?php if ( in_array( $term->term_id, $cats )) echo 'checked="checked"' ?> /><?php echo $term->name; ?>
+			<input type="checkbox" id="_wpbo_cat_<?php echo $term->term_id ?>" name="_wpbo_cat_<?php echo $term->term_id ?>" <?php if ( is_array( $cats ) and in_array( $term->term_id, $cats )) echo 'checked="checked"' ?> /><?php echo $term->name; ?>
 		</li>
 	<?php 
 	
@@ -301,7 +306,7 @@ add_action( 'save_post', 'wpbo_save_quantity_rule_meta');
 function wpbo_save_quantity_rule_meta( $post_id ) {
 	
 	// Validate Post Type
-	if ( $_POST['post_type'] !== 'quantity-rule' ) {
+	if ( ! isset( $_POST['post_type'] ) or $_POST['post_type'] !== 'quantity-rule' ) {
 		return;
 	}
 	
@@ -352,7 +357,7 @@ add_action( 'save_post', 'wpbo_save_quantity_rule_taxes');
 function wpbo_save_quantity_rule_taxes( $post_id ) {
 	
 	// Validate Post Type
-	if ( $_POST['post_type'] !== 'quantity-rule' ) {
+	if ( ! isset( $_POST['post_type'] ) or $_POST['post_type'] !== 'quantity-rule' ) {
 		return;
 	}
 	

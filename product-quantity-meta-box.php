@@ -49,7 +49,7 @@ function wpbo_product_info( $post ) {
 			echo "<div class='inactive-rule rule-message'>No rule is being applied becasue you've deactivted the plugin for this product.</div>";
 		} elseif ( $rule == 'override' ) {
 			echo "<div class='overide-rule rule-message'>The values below are being used because you've chosen to override any rules for this product.</div>";
-		} elseif ( $rule->post_title == null ) {
+		} elseif ( ! isset( $rule->post_title ) or $rule->post_title == null ) {
 			echo "<div class='no-rule rule-message'>The values below will be used becasue there is not rule currently being applied to this product.</div>";
 		} else { ?>
 			<div class="active-rule">
@@ -132,7 +132,7 @@ add_action( 'save_post', 'wpbo_save_quantity_meta');
 function wpbo_save_quantity_meta( $post_id ) {
 
 	// Validate Post Type
-	if ( $_POST['post_type'] !== 'product' ) {
+	if ( ! isset( $_POST['post_type'] ) or $_POST['post_type'] !== 'product' ) {
 		return;
 	}
 	
