@@ -140,7 +140,10 @@ function wpbo_quantity_rule_meta( $post ) {
 	$max  = get_post_meta( $post->ID, '_max', true);
 	$step = get_post_meta( $post->ID, '_step', true);
 	$priority = get_post_meta( $post->ID, '_priority', true);
-
+	
+	// Create Nonce Field
+	wp_nonce_field( plugin_basename( __FILE__ ), '_wpbo_rule_value_nonce' );
+	
 	?>
 		<div class="wpbo-meta">
 			<label for="min">Minimum</label>
@@ -192,6 +195,10 @@ function wpbo_quantity_rule_tax_meta( $post ) {
 	$terms = get_terms( $tax_name, $args );
 	
 	if ( $terms ){
+		
+		// Create Nonce Field
+		wp_nonce_field( plugin_basename( __FILE__ ), '_wpbo_tax_nonce' );
+	
 		echo '<ul class="rule-product-cats level-1">';
 		foreach ( $terms as $term ) {
 			wpbo_print_tax_inputs( $term, $tax_name, $cats, 2 );
@@ -287,12 +294,27 @@ function wpbo_company_notice_meta( $post ) {
 }
 
 /*
-*	Hook to save all meta data
+*	Save Rule Meta Values
 */
 add_action( 'save_post', 'wpbo_save_quantity_rule_meta');
 
 function wpbo_save_quantity_rule_meta( $post_id ) {
 	
+	// Validate Post Type
+	if ( $_POST['post_type'] !== 'quantity-rule' ) {
+		return;
+	}
+	
+	// Validate User
+	if ( !current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+	// Verify Nonce
+    if ( ! isset( $_POST["_wpbo_rule_value_nonce"] ) or ! wp_verify_nonce( $_POST["_wpbo_rule_value_nonce"], plugin_basename( __FILE__ ) ) ) {
+        return;
+    }
+
 	/* Make sure $min >= step */
 	if( isset( $_POST['min'] ) ) {
 		$min = $_POST['min'];
@@ -320,6 +342,30 @@ function wpbo_save_quantity_rule_meta( $post_id ) {
 		update_post_meta( $post_id, '_priority', wpbo_validate_number( $_POST['priority'] ) );
 	}
 	
+}
+
+/*
+*	Save Rule Taxonomy Values
+*/
+add_action( 'save_post', 'wpbo_save_quantity_rule_taxes');
+
+function wpbo_save_quantity_rule_taxes( $post_id ) {
+	
+	// Validate Post Type
+	if ( $_POST['post_type'] !== 'quantity-rule' ) {
+		return;
+	}
+	
+	// Validate User
+	if ( !current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+	// Verify Nonce
+    if ( ! isset( $_POST["_wpbo_tax_nonce"] ) or ! wp_verify_nonce( $_POST["_wpbo_tax_nonce"], plugin_basename( __FILE__ ) ) ) {
+        return;
+    }
+
 	// Check which Categories have been selected
 	$tax_name = 'product_cat';
 	$args = array( 'hide_empty' => false );
@@ -337,7 +383,8 @@ function wpbo_save_quantity_rule_meta( $post_id ) {
 	// Add them to the post meta
 	delete_post_meta( $post_id, '_cats' );
 	update_post_meta( $post_id, '_cats', $cats, false );
-}
+
+} 
 
 /*
 *	Validate inputs as numbers and set them to null if 0

@@ -5,7 +5,7 @@
 */
 
 /*
-*	Register Meta Box
+*	Register Rule Meta Box for Product Page
 */
 add_action( 'add_meta_boxes', 'wpbo_meta_box_create' );
 
@@ -21,7 +21,9 @@ function wpbo_meta_box_create() {
 	);
 }
 
-// Display URL Meta Box
+/*
+*	Display Rule Meta Box
+*/
 function wpbo_product_info( $post ) {
 	global $product;
 	global $woocommerce;
@@ -96,7 +98,10 @@ function wpbo_product_info( $post ) {
 		$min   = get_post_meta( $post->ID, '_wpbo_minimum',  true );
 		$max   = get_post_meta( $post->ID, '_wpbo_maximum',  true );
 		$over  = get_post_meta( $post->ID, '_wpbo_override', true );
-	
+		
+		// Create Nonce Field
+		wp_nonce_field( plugin_basename( __FILE__ ), '_wpbo_product_rule_nonce' );
+		
 		// Print the form ?>	
 		<div class="rule-input-boxes">
 			<input type="checkbox" name="_wpbo_deactive" <?php if ( $deactive == 'on' ) echo 'checked'; ?> />
@@ -119,17 +124,36 @@ function wpbo_product_info( $post ) {
 	endif; // Product Type Must Equal Simple
 }
 
-// Handle Saving Meta Box Data
+/*
+*	Handle Saving Meta Box Data
+*/
 add_action( 'save_post', 'wpbo_save_quantity_meta');
 
 function wpbo_save_quantity_meta( $post_id ) {
 
+	// Validate Post Type
+	if ( $_POST['post_type'] !== 'product' ) {
+		return;
+	}
+	
+	// Validate User
+	if ( !current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+    
+    // Verify Nonce
+    if ( ! isset( $_POST["_wpbo_product_rule_nonce"] ) or ! wp_verify_nonce( $_POST["_wpbo_product_rule_nonce"], plugin_basename( __FILE__ ) ) ) {
+        return;
+    }
+
+	// Update Rule Meta Values
 	if( isset( $_POST['_wpbo_deactive'] )) {
 		update_post_meta( 
 			$post_id, 
 			'_wpbo_deactive', 
 			strip_tags( $_POST['_wpbo_deactive'] )
 		);
+		
 	} else {
 		update_post_meta( 
 			$post_id, 
@@ -190,4 +214,5 @@ function wpbo_save_quantity_meta( $post_id ) {
 			'' 
 		);
 	}
+
 }
