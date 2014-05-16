@@ -4,7 +4,7 @@ Tags: woocommerce, product quantities, product minimum values, product maximum v
 Donate Link: http://wpbackoffice.com/plugins/woocommerce-incremental-product-quantities/
 Requires at least: 2.3
 Tested up to: 3.91
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ Manual Installation
 6. Set Rules for categories by clicking the new ‘Quantity Rules’ sidebar option or assign per-product rules by using the new metabox on your product page.
 
 == Upgrade Notice == 
+
+= 2.1.4 = 
+* Upgrade fix, removed error for unset value
 
 = 2.1.3 = 
 * Added Quantity Message Options
