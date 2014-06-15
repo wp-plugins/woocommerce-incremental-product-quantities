@@ -79,7 +79,7 @@ class IPQ_Actions {
 		$rule = wpbo_get_applied_rule( $product );
 		
 		// Return nothing if APQ is deactivated
-		if ( $rule == 'inactive' ) {
+		if ( $rule == 'inactive' or $rule == null ) {
 			return; 
 		}
 		
