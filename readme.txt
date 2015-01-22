@@ -63,6 +63,9 @@ Manual Installation
 
 == Upgrade Notice == 
 
+= 2.1.8 = 
+* Fixing an issue where rules category/tag rules wouldn't work if the site WP Site used a custom database prefix.
+
 = 2.1.7 = 
 * Adding Guest Role, improving interface for role selection, and bug when no roles were selected.
 

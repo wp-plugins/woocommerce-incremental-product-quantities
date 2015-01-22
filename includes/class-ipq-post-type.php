@@ -458,7 +458,7 @@ class IPQ_Quantity_Rule_Post_Type {
 		?>
 			<div style="text-align: center">
 				<h3>Enjoy this plugin?</h3>
-				<a href="http://wordpress.org/support/view/plugin-reviews/woocommerce-incremental-product-quantities" target="_blank">Rating us on Wordpress!</a>
+				<a href="http://wordpress.org/support/view/plugin-reviews/woocommerce-incremental-product-quantities" target="_blank">Rate us on Wordpress.org!</a>
 			
 				<h3>Need Support?</h3>
 				<a href="http://wordpress.org/support/plugin/woocommerce-incremental-product-quantities" target="_blank">Visit our Support Forum</a> 
