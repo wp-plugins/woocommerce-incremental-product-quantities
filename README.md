@@ -7,7 +7,7 @@ Donate Link: http://wpbackoffice.com/plugins/woocommerce-incremental-product-qua
 
 Requires at least: 3.5
 
-Tested up to: 4.0.1
+Tested up to: 4.1
 
 Stable tag: 2.1.8
 

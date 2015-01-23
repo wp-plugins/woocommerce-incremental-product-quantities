@@ -3,8 +3,8 @@ Contributors: wpbackoffice
 Tags: woocommerce, product quantities, product minimum values, product maximum values, product step values, incremental product quantities, min, max
 Donate Link: http://wpbackoffice.com/plugins/woocommerce-incremental-product-quantities/
 Requires at least: 3.5
-Tested up to: 4.0.1
-Stable tag: 2.1.7
+Tested up to: 4.1
+Stable tag: 2.1.8
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
