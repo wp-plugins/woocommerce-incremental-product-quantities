@@ -259,7 +259,7 @@ function wpbo_get_value_from_rule( $type, $product, $rule ) {
 		}
 		
 		if( isset( $options['ipq_site_step'] ) ) {
-			$step = $options['ipq_site_step'];			
+			$step = $options['ipq_site_step'];
 		} else {
 			$step = '';			
 		}

@@ -4,7 +4,7 @@ Tags: woocommerce, product quantities, product minimum values, product maximum v
 Donate Link: http://wpbackoffice.com/plugins/woocommerce-incremental-product-quantities/
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 2.1.8
+Stable tag: 2.1.9
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Manual Installation
 6. Set Rules for categories by clicking the new ‘Quantity Rules’ sidebar option or assign per-product rules by using the new metabox on your product page.
 
 == Upgrade Notice == 
+
+= 2.1.9 = 
+* Fixing munged defaults for the sitewide rules that could cause it to fail if all fields weren't populated.
 
 = 2.1.8 = 
 * Fixing an issue where rules category/tag rules wouldn't work if the site WP Site used a custom database prefix.
